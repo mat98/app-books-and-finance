@@ -33,21 +33,16 @@
 
       <section class="ls-section">
         <h2 class="section-label">Resumo</h2>
-        <p class="ls-summary">{{ lesson.summary }}</p>
+        <div class="ls-summary">
+          <p v-for="(para, i) in lesson.summary.split('\n\n')" :key="i">{{ para }}</p>
+        </div>
       </section>
 
       <section class="ls-section">
         <h2 class="section-label">Ideias-chave</h2>
-        <p class="ls-hint">Clique para destacar as mais importantes para você</p>
         <ul class="ideas-list">
-          <li
-            v-for="idea in lesson.keyIdeas"
-            :key="idea"
-            class="idea-item"
-            :class="{ highlighted: isHighlighted(idea) }"
-            @click="toggleHighlight(idea)"
-          >
-            <span class="idea-dot">{{ isHighlighted(idea) ? '◆' : '◇' }}</span>
+          <li v-for="idea in lesson.keyIdeas" :key="idea" class="idea-item">
+            <span class="idea-dot">—</span>
             <span>{{ idea }}</span>
           </li>
         </ul>
@@ -88,13 +83,11 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { computed } from 'vue'
 import { allLessons, financasData } from '../data/financas.js'
 
 const props = defineProps({ lessonId: Number })
 const emit = defineEmits(['prev', 'next'])
-
-const highlights = ref({})
 
 const lesson = computed(() => allLessons.find((l) => l.id === props.lessonId))
 const mod = computed(() =>
@@ -105,19 +98,6 @@ const lessonIndex = computed(() => allLessons.findIndex((l) => l.id === props.le
 const total = allLessons.length
 const prevLesson = computed(() => allLessons[lessonIndex.value - 1] || null)
 const nextLesson = computed(() => allLessons[lessonIndex.value + 1] || null)
-
-function isHighlighted(idea) {
-  return !!(highlights.value[props.lessonId] || []).includes(idea)
-}
-
-function toggleHighlight(idea) {
-  const current = highlights.value[props.lessonId] || []
-  if (current.includes(idea)) {
-    highlights.value[props.lessonId] = current.filter((i) => i !== idea)
-  } else {
-    highlights.value[props.lessonId] = [...current, idea]
-  }
-}
 </script>
 
 <style scoped>
@@ -263,58 +243,38 @@ function toggleHighlight(idea) {
 }
 
 .ls-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ls-summary p {
   font-size: 17px;
   line-height: 1.85;
   color: var(--ink-soft);
 }
 
 /* ── Ideias-chave ───────────────────────── */
-.ls-hint {
-  font-size: 13px;
-  color: var(--ink-faint);
-  font-style: italic;
-  margin-bottom: 14px;
-}
-
 .ideas-list {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .idea-item {
   display: flex;
   align-items: flex-start;
   gap: 12px;
-  padding: 14px 18px;
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  cursor: pointer;
-  transition: background var(--transition), border-color var(--transition), transform var(--transition);
-  font-size: 15px;
+  font-size: 17px;
   color: var(--ink-soft);
-  line-height: 1.5;
-  user-select: none;
-}
-
-.idea-item:hover {
-  background: var(--cream-dark);
-  transform: translateX(2px);
-}
-
-.idea-item.highlighted {
-  background: color-mix(in srgb, var(--ls-color) 8%, white);
-  border-color: color-mix(in srgb, var(--ls-color) 35%, var(--border));
-  color: var(--ink);
-  font-weight: 500;
+  line-height: 1.85;
 }
 
 .idea-dot {
-  color: var(--ls-color);
+  color: var(--ink-faint);
   flex-shrink: 0;
-  font-size: 12px;
-  margin-top: 3px;
+  margin-top: 2px;
 }
 
 /* ── Insight ────────────────────────────── */
@@ -423,8 +383,7 @@ function toggleHighlight(idea) {
   }
 
   .idea-item {
-    font-size: 14px;
-    padding: 12px 14px;
+    font-size: 15px;
   }
 
   .footer-nav-btn {

@@ -33,26 +33,49 @@
 
       <section class="ls-section">
         <h2 class="section-label">Resumo</h2>
-        <div class="ls-summary">
-          <p v-for="(para, i) in lesson.summary.split('\n\n')" :key="i">{{ para }}</p>
+        <div class="pcard-list">
+          <div v-for="(para, i) in lesson.summary.split('\n\n')" :key="i" class="pcard">
+            <div class="pcard__bg" />
+            <div class="pcard__icon-wrap">
+              <span class="pcard__num">{{ String(i + 1).padStart(2, '0') }}</span>
+            </div>
+            <div class="pcard__overlay" />
+            <div class="pcard__body">
+              <div class="pcard__name">{{ para }}</div>
+            </div>
+          </div>
         </div>
       </section>
 
       <section class="ls-section">
         <h2 class="section-label">Ideias-chave</h2>
-        <ul class="ideas-list">
-          <li v-for="idea in lesson.keyIdeas" :key="idea" class="idea-item">
-            <span class="idea-dot">—</span>
-            <span>{{ idea }}</span>
-          </li>
-        </ul>
+        <div class="pcard-list">
+          <div v-for="(idea, i) in lesson.keyIdeas" :key="idea" class="pcard">
+            <div class="pcard__bg" />
+            <div class="pcard__icon-wrap">
+              <span class="pcard__num">{{ String(i + 1).padStart(2, '0') }}</span>
+            </div>
+            <div class="pcard__overlay" />
+            <div class="pcard__body">
+              <div class="pcard__name">{{ idea }}</div>
+            </div>
+          </div>
+        </div>
       </section>
 
       <section v-if="lesson.insight" class="ls-section">
         <h2 class="section-label">Insight da aula</h2>
-        <div class="ls-insight">
-          <span class="insight-icon">◈</span>
-          <p>{{ lesson.insight }}</p>
+        <div class="pcard-list">
+          <div class="pcard pcard--insight">
+            <div class="pcard__bg" />
+            <div class="pcard__icon-wrap">
+              <span class="pcard__insight-icon">◈</span>
+            </div>
+            <div class="pcard__overlay" />
+            <div class="pcard__body">
+              <div class="pcard__name pcard__name--italic">{{ lesson.insight }}</div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -242,63 +265,89 @@ const nextLesson = computed(() => allLessons[lessonIndex.value + 1] || null)
   border-bottom: 1px solid color-mix(in srgb, var(--ls-color) 20%, var(--border));
 }
 
-.ls-summary {
+/* ── Player Cards (igual ComprasPage) ──── */
+.pcard-list {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 6px;
 }
 
-.ls-summary p {
-  font-size: 17px;
-  line-height: 1.85;
-  color: var(--ink-soft);
-}
-
-/* ── Ideias-chave ───────────────────────── */
-.ideas-list {
-  list-style: none;
+.pcard {
+  position: relative;
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  align-items: center;
+  min-height: 68px;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: default;
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.55);
+  transition: transform 0.13s, box-shadow 0.13s;
 }
 
-.idea-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  font-size: 17px;
-  color: var(--ink-soft);
-  line-height: 1.85;
+.pcard:active {
+  transform: scale(0.983);
 }
 
-.idea-dot {
-  color: var(--ink-faint);
+.pcard__bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, color-mix(in srgb, var(--ls-color) 80%, #000) 0%, var(--ls-color) 100%);
+}
+
+.pcard__icon-wrap {
+  position: relative;
+  z-index: 2;
+  width: 76px;
   flex-shrink: 0;
-  margin-top: 2px;
-}
-
-/* ── Insight ────────────────────────────── */
-.ls-insight {
   display: flex;
-  gap: 16px;
-  background: color-mix(in srgb, var(--ls-color) 5%, var(--cream-dark));
-  border: 1px solid color-mix(in srgb, var(--ls-color) 22%, var(--border));
-  border-radius: var(--radius-lg);
-  padding: 20px 22px;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.6));
 }
 
-.insight-icon {
-  font-size: 20px;
-  color: var(--ls-color);
-  flex-shrink: 0;
-  margin-top: 2px;
+.pcard__num {
+  font-size: 22px;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.35);
+  letter-spacing: -1px;
 }
 
-.ls-insight p {
-  font-size: 16px;
-  line-height: 1.8;
-  color: var(--ink-soft);
+.pcard__insight-icon {
+  font-size: 26px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.pcard__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(to right, rgba(0,0,0,.05) 0%, rgba(0,0,0,.45) 40%, rgba(0,0,0,.7) 70%, rgba(0,0,0,.82) 100%);
+}
+
+.pcard__body {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  min-width: 0;
+  padding: 12px 16px 12px 8px;
+}
+
+.pcard__name {
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: #fff;
+  line-height: 1.65;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.8);
+  white-space: normal;
+  letter-spacing: 0.01em;
+}
+
+.pcard__name--italic {
   font-style: italic;
+  font-weight: 400;
+  opacity: 0.9;
 }
 
 /* ── Navegação inferior ─────────────────── */
@@ -318,7 +367,7 @@ const nextLesson = computed(() => allLessons[lessonIndex.value + 1] || null)
   padding: 14px 18px;
   border-radius: var(--radius);
   border: 1px solid var(--border);
-  background: white;
+  background: var(--cream-dark);
   cursor: pointer;
   transition: background var(--transition), border-color var(--transition), box-shadow var(--transition);
   max-width: 48%;

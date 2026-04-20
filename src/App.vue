@@ -3,13 +3,20 @@
     <AppHeader
       :show-search="showSearch"
       :search-query="searchQuery"
+      :menu-open="menuOpen"
       @toggle-search="toggleSearch"
       @search="handleSearch"
+      @toggle-menu="menuOpen = !menuOpen"
     />
+
+    <!-- Overlay mobile -->
+    <Transition name="overlay">
+      <div v-if="menuOpen" class="sidebar-overlay" @click="menuOpen = false" />
+    </Transition>
 
     <main class="layout">
       <!-- Sidebar -->
-      <aside class="sidebar">
+      <aside class="sidebar" :class="{ 'sidebar--open': menuOpen }">
         <section class="hero">
           <div class="hero-ornament">◎</div>
           <h1 class="hero-title">Finanças</h1>
@@ -42,7 +49,7 @@
                 :key="lesson.id"
                 class="toc-lesson"
                 :class="{ active: activeLessonId === lesson.id }"
-                @click="setActive(lesson.id)"
+                @click="setActive(lesson.id); menuOpen = false"
               >
                 <span class="toc-title" v-html="highlightText(lesson.title)"></span>
                 <span v-if="lesson.source" class="toc-source">{{ lesson.source }}</span>
@@ -86,6 +93,7 @@ import { financasData, allLessons } from './data/financas.js'
 const activeLessonId = ref(null)
 const showSearch = ref(false)
 const searchQuery = ref('')
+const menuOpen = ref(false)
 
 const searchResults = computed(() => {
   const q = searchQuery.value.toLowerCase().trim()
@@ -150,18 +158,28 @@ function handleSearch(q) {
 .layout {
   flex: 1;
   display: grid;
-  grid-template-columns: 280px 1fr;
+  grid-template-columns: 1fr;
   min-height: calc(100vh - 60px);
 }
 
 /* ── Sidebar ────────────────────────────── */
 .sidebar {
-  border-right: 1px solid var(--border);
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 280px;
+  z-index: 200;
   overflow-y: auto;
-  position: sticky;
-  top: 60px;
-  height: calc(100vh - 60px);
   background: var(--cream);
+  border-right: 1px solid var(--border);
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.12);
+  transform: translateX(-100%);
+  transition: transform 260ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar--open {
+  transform: translateX(0);
 }
 
 .hero {
@@ -391,22 +409,30 @@ function handleSearch(q) {
   transform: translateY(-4px);
 }
 
+/* ── Overlay ────────────────────────────── */
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+}
+
+.overlay-enter-active,
+.overlay-leave-active {
+  transition: opacity 220ms ease;
+}
+.overlay-enter-from,
+.overlay-leave-to {
+  opacity: 0;
+}
+
 /* ── Responsive ─────────────────────────── */
 @media (max-width: 700px) {
-  .layout {
-    grid-template-columns: 1fr;
-  }
-
-  .sidebar {
-    position: static;
-    height: auto;
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-  }
-
   .content-panel {
     position: static;
     height: auto;
+    min-height: calc(100vh - 60px);
   }
 
   .welcome-panel {

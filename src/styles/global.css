@@ -5,27 +5,27 @@
 }
 
 :root {
-  --cream: #F5F0E8;
-  --cream-dark: #EDE5D4;
-  --cream-darker: #D9CEBC;
-  --ink: #1A1614;
-  --ink-soft: #3D3530;
-  --ink-light: #7A6F66;
-  --ink-faint: #A89F96;
-  --accent: #2E7D52;
-  --accent-light: #3D9B68;
-  --accent-muted: #A8D5BA;
-  --accent-bg: #EAF5EF;
-  --gold: #C17C3A;
-  --gold-muted: #E8C99A;
-  --gold-bg: #FBF4EA;
-  --red-soft: #B85450;
-  --border: #D4C9B8;
-  --shadow: rgba(26, 22, 20, 0.08);
-  --shadow-md: rgba(26, 22, 20, 0.14);
+  --cream: #0f1117;
+  --cream-dark: #181b24;
+  --cream-darker: #232736;
+  --ink: #e8eaf0;
+  --ink-soft: #c4c8d4;
+  --ink-light: #8a90a0;
+  --ink-faint: #555e72;
+  --accent: #4ade80;
+  --accent-light: #6ee7a0;
+  --accent-muted: #166534;
+  --accent-bg: #0d2618;
+  --gold: #fbbf24;
+  --gold-muted: #78490a;
+  --gold-bg: #1c1407;
+  --red-soft: #f87171;
+  --border: #2a2f3d;
+  --shadow: rgba(0, 0, 0, 0.3);
+  --shadow-md: rgba(0, 0, 0, 0.5);
 
   --font-serif: 'Playfair Display', Georgia, serif;
-  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-sans: 'Nunito', system-ui, sans-serif;
 
   --radius-sm: 4px;
   --radius: 8px;
@@ -83,7 +83,7 @@ a {
 
 ::selection {
   background: var(--accent-muted);
-  color: var(--ink);
+  color: var(--accent);
 }
 
 .fade-enter-active,

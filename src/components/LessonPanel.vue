@@ -107,20 +107,23 @@
 
 <script setup>
 import { computed } from 'vue'
-import { allLessons, financasData } from '../data/financas.js'
 
-const props = defineProps({ lessonId: Number })
+const props = defineProps({
+  lessonId: Number,
+  lessons: { type: Array, required: true },
+  modules: { type: Array, required: true },
+})
 const emit = defineEmits(['prev', 'next'])
 
-const lesson = computed(() => allLessons.find((l) => l.id === props.lessonId))
+const lesson = computed(() => props.lessons.find((l) => l.id === props.lessonId))
 const mod = computed(() =>
-  financasData.modules.find((m) => m.id === lesson.value?.moduleId)
+  props.modules.find((m) => m.id === lesson.value?.moduleId)
 )
 
-const lessonIndex = computed(() => allLessons.findIndex((l) => l.id === props.lessonId))
-const total = allLessons.length
-const prevLesson = computed(() => allLessons[lessonIndex.value - 1] || null)
-const nextLesson = computed(() => allLessons[lessonIndex.value + 1] || null)
+const lessonIndex = computed(() => props.lessons.findIndex((l) => l.id === props.lessonId))
+const total = computed(() => props.lessons.length)
+const prevLesson = computed(() => props.lessons[lessonIndex.value - 1] || null)
+const nextLesson = computed(() => props.lessons[lessonIndex.value + 1] || null)
 </script>
 
 <style scoped>

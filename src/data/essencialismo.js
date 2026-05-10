@@ -256,7 +256,7 @@ export const essencialismoData = {
           moduleId: 'eliminar',
           title: 'Edição — A disciplina da subtração',
           source: 'McKeown',
-          image: '/hq/edicao-disciplina-subtracao.png',
+          image: '/hq/edicao-disciplina-subtracao.webp',
           quote: 'A subtração aumenta o valor do que sobra.',
           summary:
             'Os melhores editores — de filmes, textos, produtos, códigos — fazem seu trabalho cortando, não adicionando. O diretor que corta uma cena querida porque ela não serve ao filme; o editor que remove o parágrafo favorito do autor porque prejudica o fluxo; o designer que elimina o botão extra porque simplifica a experiência — todos praticam essencialismo.\n\nMcKeown usa o exemplo de Michelangelo: quando perguntado como criava suas esculturas, ele respondia que a escultura já estava dentro do mármore — seu trabalho era apenas remover o excesso. Essa é a mentalidade do editorialista essencialista: o essencial já existe; precisa ser revelado pela subtração do não-essencial.\n\nAplicado à vida: editar significa remover ativamente compromissos, projetos, reuniões, atividades e mesmo relacionamentos que não servem ao essencial. Não é crueldade — é clareza. Cada item removido da lista aumenta a qualidade e a atenção dedicada ao que permanece.\n\nA tendência humana é acumular. Acumulamos objetos, compromissos, projetos, obrigações. A edição é uma prática deliberada e contínua contra essa tendência. Exige fazer periodicamente a pergunta: "Se isso não existisse na minha vida, eu o criaria hoje?".',

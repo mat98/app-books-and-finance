@@ -58,6 +58,7 @@ export const essencialismoData = {
           moduleId: 'essencia',
           title: 'Discernimento — A realidade das trocas',
           source: 'McKeown',
+          image: '/hq/discernimento-realidade-das-trocas.webp',
           quote: 'A questão não é como fazer tudo, mas qual problema você quer ter.',
           summary:
             'O mundo moderno nos vende a fantasia de que podemos ter tudo. Mais produtividade, mais presença, mais sucesso, mais equilíbrio — ao mesmo tempo. Mas toda escolha é, por definição, uma renúncia. Isso não é pessimismo; é matemática.\n\nMcKeown usa o exemplo da Southwest Airlines: a empresa escolheu ser uma companhia de voos curtos, baixo custo, sem assentos executivos, sem refeições, sem conexões internacionais. Ela não tenta ser tudo para todos. Por causa dessas renúncias deliberadas, tornou-se extraordinariamente bem-sucedida naquilo que escolheu ser.\n\nO não-essencialista tenta "ter os dois" e acaba com nada de especial. O essencialista pergunta ativamente: "Qual é o trade-off aqui? O que terei que abrir mão se disser sim?". Ignorar os trade-offs não os elimina — apenas os torna inconscientes e, portanto, mais prejudiciais.\n\nA pergunta mais poderosa deste capítulo: "Qual problema eu quero ter?" Toda escolha cria novos problemas. O essencialista escolhe deliberadamente quais problemas quer gerenciar.',

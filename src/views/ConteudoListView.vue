@@ -26,7 +26,14 @@
           :style="{ '--card-color': mod.color }"
         >
           <div class="hq-cover">
-            <div class="hq-cover-art">
+            <img
+              v-if="lesson.image"
+              :src="lesson.image"
+              :alt="lesson.title"
+              class="hq-cover-img"
+              loading="lazy"
+            />
+            <div v-else class="hq-cover-art">
               <span class="hq-cover-icon">{{ mod.icon }}</span>
             </div>
             <span class="hq-badge">HQ #{{ String(lesson.id + 1).padStart(2, '0') }}</span>
@@ -147,39 +154,45 @@ const conteudo = computed(() =>
 
 .hq-grid {
   display: grid;
-  gap: 32px;
-  grid-template-columns: 1fr;
-}
-
-@media (min-width: 768px) {
-  .hq-grid {
-    grid-template-columns: 1fr 1fr;
-  }
+  gap: 18px;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
 }
 
 .hq-card {
   --card-color: var(--accent);
   display: block;
   background: var(--cream-dark);
-  border: 4px solid #fff;
-  border-radius: 10px;
+  border: 3px solid #fff;
+  border-radius: 8px;
   overflow: hidden;
   text-decoration: none;
   color: inherit;
-  box-shadow: 6px 6px 0 0 #8B3DFF;
+  box-shadow: 4px 4px 0 0 #8B3DFF;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .hq-card:hover {
-  transform: translate(-4px, -4px);
-  box-shadow: 10px 10px 0 0 var(--card-color);
+  transform: translate(-3px, -3px);
+  box-shadow: 7px 7px 0 0 var(--card-color);
 }
 
 .hq-cover {
   position: relative;
-  aspect-ratio: 16 / 9;
-  border-bottom: 4px solid #fff;
+  aspect-ratio: 4 / 3;
+  border-bottom: 3px solid #fff;
   overflow: hidden;
+}
+
+.hq-cover-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.hq-card:hover .hq-cover-img {
+  transform: scale(1.05);
 }
 
 .hq-cover-art {
@@ -206,7 +219,7 @@ const conteudo = computed(() =>
 }
 
 .hq-cover-icon {
-  font-size: clamp(60px, 10vw, 100px);
+  font-size: clamp(48px, 8vw, 78px);
   color: var(--card-color);
   text-shadow: 4px 4px 0 #000, -2px -2px 0 rgba(255, 255, 255, 0.1);
   line-height: 1;
@@ -214,31 +227,31 @@ const conteudo = computed(() =>
 
 .hq-badge {
   position: absolute;
-  top: 14px;
-  left: 14px;
+  top: 10px;
+  left: 10px;
   background: #fde047;
   color: #000;
   font-family: 'Bangers', 'Impact', sans-serif;
-  font-size: 18px;
+  font-size: 15px;
   letter-spacing: 0.04em;
-  padding: 4px 14px;
+  padding: 3px 10px;
   border: 2px solid #000;
   transform: rotate(-3deg);
 }
 
 .hq-body {
-  padding: 22px;
+  padding: 16px;
 }
 
 .hq-meta {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 11px;
+  font-size: 10px;
   color: var(--ink-light);
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
@@ -252,12 +265,12 @@ const conteudo = computed(() =>
 
 .hq-card-title {
   font-family: var(--font-serif);
-  font-size: 22px;
+  font-size: 17px;
   font-weight: 700;
   color: #fff;
   letter-spacing: -0.01em;
   line-height: 1.2;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   transition: color 0.2s;
 }
 
@@ -268,11 +281,11 @@ const conteudo = computed(() =>
 .hq-card-quote {
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: 14px;
+  font-size: 12.5px;
   color: var(--ink-soft);
-  line-height: 1.5;
+  line-height: 1.45;
   border-left: 2px solid var(--card-color);
-  padding-left: 12px;
+  padding-left: 10px;
 }
 
 .hq-404 {

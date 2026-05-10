@@ -29,7 +29,9 @@
           :alt="lesson.title"
           class="comic-image"
           loading="lazy"
+          @click="openImage(lesson.image)"
         />
+        <span class="comic-zoom-hint">toque para ampliar</span>
       </article>
     </section>
 
@@ -94,8 +96,10 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, onBeforeUnmount } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
+import PhotoSwipeLightbox from 'photoswipe/lightbox'
+import 'photoswipe/style.css'
 import { conteudos } from '../data/conteudos.js'
 
 const PANEL_ICONS = ['◇', '◈', '◆', '✦', '✧', '★', '☄', '◉', '◎', '○', '●', '▲', '▼', '■', '□']
@@ -129,6 +133,47 @@ const lessonIndex = computed(() => {
 
 const prevLesson = computed(() => allLessons.value[lessonIndex.value - 1] || null)
 const nextLesson = computed(() => allLessons.value[lessonIndex.value + 1] || null)
+
+let activeLightbox = null
+
+function loadImageSize(src) {
+  return new Promise((resolve) => {
+    const img = new Image()
+    img.onload = () => resolve({ w: img.naturalWidth, h: img.naturalHeight })
+    img.onerror = () => resolve({ w: 1200, h: 1600 })
+    img.src = src
+  })
+}
+
+async function openImage(src) {
+  const size = await loadImageSize(src)
+  const lightbox = new PhotoSwipeLightbox({
+    dataSource: [{ src, width: size.w, height: size.h, alt: lesson.value?.title || '' }],
+    pswpModule: () => import('photoswipe'),
+    initialZoomLevel: 'fit',
+    secondaryZoomLevel: 2,
+    maxZoomLevel: 5,
+    bgOpacity: 0.95,
+    showHideAnimationType: 'fade',
+    closeOnVerticalDrag: true,
+    clickToCloseNonZoomable: true,
+    wheelToZoom: true,
+    padding: { top: 16, bottom: 16, left: 8, right: 8 },
+  })
+  lightbox.on('destroy', () => {
+    activeLightbox = null
+  })
+  lightbox.init()
+  lightbox.loadAndOpen(0)
+  activeLightbox = lightbox
+}
+
+onBeforeUnmount(() => {
+  if (activeLightbox) {
+    activeLightbox.destroy()
+    activeLightbox = null
+  }
+})
 
 const panels = computed(() => {
   if (!lesson.value) return []
@@ -280,6 +325,21 @@ const panels = computed(() => {
   display: block;
   width: 100%;
   height: auto;
+  cursor: zoom-in;
+}
+
+.comic-zoom-hint {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  pointer-events: none;
+  user-select: none;
 }
 
 /* ── Capa do painel (substitui imagem) ───── */
@@ -484,5 +544,13 @@ const panels = computed(() => {
   .speech-bubble {
     max-width: 100%;
   }
+}
+</style>
+
+<style>
+.pswp {
+  --pswp-bg: #000;
+  --pswp-icon-color: #fff;
+  --pswp-icon-color-secondary: #000;
 }
 </style>

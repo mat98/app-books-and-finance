@@ -107,14 +107,8 @@ function slug(s) {
 /* ── Grid ─────────────────────────────── */
 .hq-grid {
   display: grid;
-  gap: 36px;
-  grid-template-columns: 1fr;
-}
-
-@media (min-width: 768px) {
-  .hq-grid {
-    grid-template-columns: 1fr 1fr;
-  }
+  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
 }
 
 /* ── Card HQ ──────────────────────────── */
@@ -122,25 +116,25 @@ function slug(s) {
   --card-color: var(--accent);
   display: block;
   background: var(--cream-dark);
-  border: 4px solid #fff;
-  border-radius: 10px;
+  border: 3px solid #fff;
+  border-radius: 8px;
   overflow: hidden;
   text-decoration: none;
   color: inherit;
-  box-shadow: 6px 6px 0 0 #8B3DFF;
+  box-shadow: 4px 4px 0 0 #8B3DFF;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .hq-card:hover {
-  transform: translate(-4px, -4px);
-  box-shadow: 10px 10px 0 0 var(--card-color);
+  transform: translate(-3px, -3px);
+  box-shadow: 7px 7px 0 0 var(--card-color);
 }
 
 /* ── Capa ─────────────────────────────── */
 .hq-cover {
   position: relative;
-  aspect-ratio: 16 / 9;
-  border-bottom: 4px solid #fff;
+  aspect-ratio: 4 / 3;
+  border-bottom: 3px solid #fff;
   overflow: hidden;
 }
 
@@ -168,7 +162,7 @@ function slug(s) {
 }
 
 .hq-cover-icon {
-  font-size: clamp(80px, 14vw, 140px);
+  font-size: clamp(48px, 8vw, 80px);
   color: var(--card-color);
   text-shadow:
     4px 4px 0 #000,
@@ -178,14 +172,14 @@ function slug(s) {
 
 .hq-badge {
   position: absolute;
-  top: 14px;
-  left: 14px;
+  top: 10px;
+  left: 10px;
   background: #fde047;
   color: #000;
   font-weight: 800;
-  font-size: 12px;
+  font-size: 10px;
   letter-spacing: 0.04em;
-  padding: 4px 12px;
+  padding: 3px 9px;
   border: 2px solid #000;
   transform: rotate(-3deg);
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -193,17 +187,17 @@ function slug(s) {
 
 /* ── Corpo ────────────────────────────── */
 .hq-body {
-  padding: 24px;
+  padding: 16px;
 }
 
 .hq-meta {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 10px;
-  font-size: 12px;
+  gap: 8px;
+  font-size: 10px;
   color: var(--ink-light);
-  margin-bottom: 14px;
+  margin-bottom: 10px;
   text-transform: uppercase;
   letter-spacing: 0.06em;
 }
@@ -227,12 +221,12 @@ function slug(s) {
 
 .hq-card-title {
   font-family: var(--font-serif);
-  font-size: 28px;
+  font-size: 19px;
   font-weight: 700;
   color: #fff;
   letter-spacing: -0.01em;
   line-height: 1.15;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   transition: color 0.2s ease;
 }
 
@@ -243,26 +237,26 @@ function slug(s) {
 .hq-card-quote {
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: 15px;
+  font-size: 12.5px;
   color: var(--ink-soft);
-  line-height: 1.55;
+  line-height: 1.5;
   border-left: 2px solid var(--card-color);
-  padding-left: 14px;
-  margin-bottom: 20px;
+  padding-left: 10px;
+  margin-bottom: 14px;
 }
 
 .hq-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 6px;
 }
 
 .hq-tag {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 12px;
+  font-size: 10px;
   background: var(--cream-darker);
   color: var(--card-color);
-  padding: 4px 10px;
+  padding: 3px 8px;
   border-radius: 4px;
   border: 1px solid var(--border);
 }
